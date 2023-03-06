@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import joblib
+import sklearn
 from geopy.geocoders import Nominatim, Yandex
 geolocator = Yandex(api_key='a3b68fa7-5deb-4262-aaf2-da0d88b205f5')
 inv_geolocator = Nominatim(user_agent='sanek052002@gmail.com')
@@ -106,10 +107,10 @@ def accept_user_data():
 
 def prepare_features():
     suburb, n_rooms, square, repair, floor, n_floors, house_type, lat, lng = accept_user_data()
-    kmeans_geo = pickle_load("geo_cluster.pkl")
-    stations_encoder = pickle_load("metro_stations.pkl")
-    categorical_encoder = joblib_load("categorical_encoder.pkl")
-    metros = csv_load('metro_coords.csv')
+    kmeans_geo = pickle_load("deploy/geo_cluster.pkl")
+    stations_encoder = pickle_load("deploy/metro_stations.pkl")
+    categorical_encoder = joblib_load("deploy/categorical_encoder.pkl")
+    metros = csv_load("deploy/metro_coords.csv")
 
     dist_krasn = haversine_distance(lat, lng, 55.760378, 37.577114)
     dist_kievskaya = haversine_distance(lat, lng, 55.743117, 37.564132)
@@ -137,7 +138,7 @@ def predict():
     data, square = prepare_features()
     predictions = 0
     for fold in range(5):
-        model = joblib_load(f'lgb_model_{fold}')
+        model = joblib_load(f'deploy/lgb_model_{fold}')
         predictions += model.predict(data)/5
 
     square_price = int(predictions)//1000
