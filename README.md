@@ -1,5 +1,49 @@
 # Apartment-Price-Prediction
 Предсказание примерной рыночной стоимости квартир на рынке вторичного жилья Москвы, используя данные с сайта Авито
+
+<table>
+  <tr>
+    <th>Ссылка</th>
+    <th colspan="2">Параметры квартиры</th>
+    <th colspan="2">Стоимость</th>
+    <th colspan="2">Предсказанная стоимость</th>
+  </tr>
+  <tr>
+    <td rowspan="6"><a href="https://www.avito.ru/moskva/kvartiry/2-k._kvartira_537m_917et._2685290861">link1</a></td>
+    <td>Адрес</td>
+    <td>Новокосинская ул., 17к3</td>
+    <td rowspan="3"> Квадратный метр</td>
+    <td rowspan="3"> 233 тыс. ₽</td>
+    <td rowspan="3">Квадратный метр</td>
+    <td rowspan="3">228 тыс. ₽</td>
+  </tr>
+  <tr>
+    <td>Общая площадь </td>
+    <td>53.7 м² </td>
+  </tr>
+   <tr>
+    <td>Количество комнат </td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>Ремонт</td>
+    <td>косметический</td>
+    <td rowspan="3"> Общая стоимость</td>
+    <td rowspan="3"> 12.5 млн. ₽</td>
+    <td rowspan="3">Общая стоимость</td>
+    <td rowspan="3">12.290 млн. ₽</td>
+  </tr>
+   <tr>
+      <td>Этаж</td>
+     <td>9/17</td>
+    </tr>
+  <tr>
+    <td>Тип дома </td>
+    <td>панельный</td>
+  </tr>
+</table>
+
+
 ## Этапы решения задачи
 ### [Сбор данных](https://github.com/sfnga/Apartment-Price-Prediction/tree/main/parsing)
 *  Помимо объявлений о продаже квартир спарсил следующие данные:
