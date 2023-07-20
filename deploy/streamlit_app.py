@@ -124,8 +124,7 @@ def prepare_features():
     square_munus_min = square-MIN_SQUARE_BY_ROOMS[n_rooms]
     values = [suburb, n_rooms, square, repair, float(floor), float(n_floors), house_type, dist_krasn,
               float(coords_cluster), metro_1, metro_2, metro_3, square_munus_min, dist_kremlin, dist_kievskaya]
-    df = pd.DataFrame(columns=FEATURES)
-    df = pd.concat([df, pd.DataFrame(data = values, columns = FEATURES)], ignore_index=True)
+    df = pd.DataFrame(dict(zip(FEATURES,values)), index=[0])
     for i in range(1, 4):
         df[f'Метро_{i}'] = stations_encoder.get(df[f'Метро_{i}'].item(), -1)
     df[['Район', 'Количество_комнат', 'Ремонт', 'Тип_дома']] = categorical_encoder.transform(
