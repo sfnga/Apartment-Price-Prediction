@@ -7,11 +7,11 @@ import folium
 n_rooms = ['студия','1', '2',  '3', '4','5', '6','7', '8', '9','10 и больше','свободная планировка']
 
 
-def plot_numerical_feature(df,
-                           feature,
-                           max_quantile=None,
-                           figsize=None,
-                           title=None):
+def plot_numerical_feature(df: pandas.DataFrame,
+                           feature: str,
+                           max_quantile: float = None,
+                           figsize: tuple[int, int] = None,
+                           title: str = None) -> None:
     """
     Строит графики распределения числовых признаков
     - ящик с усами
@@ -26,7 +26,7 @@ def plot_numerical_feature(df,
     title - заголовок графика
     """
     feature_values = df[feature]
-    fig, axes = plt.subplots(1, 2, figsize=(20, 8))
+    fig, axes = plt.subplots(1, 2, figsize=(20, 8) if not figsize else figsize)
 
     sns.boxplot(x=feature_values, ax=axes[0])
 
@@ -48,7 +48,7 @@ def plot_numerical_feature(df,
     plt.show()
     
 
-def get_nulls(df):
+def get_nulls(df: pandas.DataFrame) -> None:
     """
     Функция для подсчета количества и процента
     пропущенных значений признаков.
@@ -72,7 +72,9 @@ def get_nulls(df):
     return nulls, nulls_pct
 
 
-def plot_nulls(df, figsize=(25, 7), title_size=15):
+def plot_nulls(df: pandas.DataFrame,
+               figsize: tuple[int, int] = (25, 7),
+               title_size: int = 15) -> None:
     """
     Строит график количества и процента
     пропущенных значений признаков.
@@ -101,7 +103,9 @@ def plot_nulls(df, figsize=(25, 7), title_size=15):
     plt.show()
     
 
-def plot_pie_columns(df, name, n_rows=1):
+def plot_pie_columns(df: pandas.DataFrame,
+                     name: str,
+                     n_rows: int = 1) -> None:
     """
     Строит круговую диаграмму значений признака
     
@@ -149,7 +153,10 @@ def plot_pie_columns(df, name, n_rows=1):
     plt.show()
     
  
-def show_circles_on_map(data, latitude_column, longitude_column, color):
+def show_circles_on_map(data: pandas.DataFrame,
+                        latitude_column: str,
+                        longitude_column: str,
+                        color: str) -> None:
     """
     Функция для рисования координат.
     
@@ -174,7 +181,7 @@ def show_circles_on_map(data, latitude_column, longitude_column, color):
     return m
     
     
-def plot_feature_for_rooms(df, feature):
+def plot_feature_for_rooms(df: pandas.DataFrame, feature: str) -> None:
     """
     Функция для построения боксплота признака в зависимости от количества комнат в квартире.
     
@@ -195,7 +202,7 @@ def plot_feature_for_rooms(df, feature):
     plt.show()
     
 
-def plot_feature_boxplot(df, feature):
+def plot_feature_boxplot(df: pandas.DataFrame, feature: str):
     """
     Функция для построения боксплота признака.
     
