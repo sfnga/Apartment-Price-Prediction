@@ -6,7 +6,7 @@ from geopy.geocoders import Nominatim
 geolocator = Nominatim(user_agent='sanek052002@gmail.com')
 
 
-def transform_categories(df, names):
+def transform_categories(df: pandas.DataFrame, names: list[str]) -> pandas.DataFrame:
     """Создает бинарные признаки, показывающие, содержится
     ли каждое из уникальных значений признака name в строке.
     
@@ -41,7 +41,7 @@ def transform_categories(df, names):
     return result_df
 
 
-def correct_ceil(x):
+def correct_ceil(x: float) -> float:
     """
     Функция для корректировки высоты потолков.
     """
@@ -60,7 +60,10 @@ def correct_ceil(x):
     return x
 
 
-def haversine_distance(lat1, lng1, lat2, lng2):
+def haversine_distance(lat1: float,
+                       lng1: float,
+                       lat2: float,
+                       lng2: float) -> float:
     """
     Вычисление расстояния между точками по их координатам.
     
@@ -81,7 +84,7 @@ def haversine_distance(lat1, lng1, lat2, lng2):
     return h
 
 
-def extract_address_from_coords(row):
+def extract_address_from_coords(row: object) -> object:
     """Функция для получения города и района по координатам."""
     coords = f"{row['Широта']}, {row['Долгота']}"
     location = geolocator.reverse(coords, exactly_one=True)
