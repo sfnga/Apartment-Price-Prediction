@@ -79,7 +79,6 @@ def accept_user_data() -> Tuple:
     try:
         location = geolocator.geocode(address)
         st.write('Введенный адрес: ', location)
-        uburb = address
         lat = location.latitude
         lng = location.longitude
         inv_location = inv_geolocator.reverse((lat, lng), exactly_one=True)
