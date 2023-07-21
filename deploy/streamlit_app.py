@@ -5,6 +5,7 @@ import pickle
 import joblib
 import sklearn
 from geopy.geocoders import Nominatim, Yandex
+from typing import Any, Tuple
 geolocator = Yandex(api_key='a3b68fa7-5deb-4262-aaf2-da0d88b205f5')
 inv_geolocator = Nominatim(user_agent='sanek052002@gmail.com')
 
@@ -48,7 +49,10 @@ def csv_load(path):
     return data
 
 
-def haversine_distance(lat1, lng1, lat2, lng2):
+def haversine_distance(lat1: float,
+                       lng1: float,
+                       lat2: float,
+                       lng2: float) -> float:
     """
     Вычисление расстояния между точками по их координатам.
 
@@ -69,7 +73,7 @@ def haversine_distance(lat1, lng1, lat2, lng2):
     return h
 
 
-def accept_user_data():
+def accept_user_data() -> Tuple:
     address = st.text_input('Введите адрес квартиры',
                             'Москва улица Тверская 18 к1')
     try:
@@ -105,12 +109,12 @@ def accept_user_data():
     return suburb, n_rooms, square, repair, floor, n_floors, house_type, lat, lng
 
 
-def prepare_features():
+def prepare_features() -> Tuple[pd.DataFrame, float]:
     suburb, n_rooms, square, repair, floor, n_floors, house_type, lat, lng = accept_user_data()
-    kmeans_geo = pickle_load("deploy/geo_cluster.pkl")
-    stations_encoder = pickle_load("deploy/metro_stations.pkl")
-    categorical_encoder = joblib_load("deploy/categorical_encoder.pkl")
-    metros = csv_load("deploy/metro_coords.csv")
+    kmeans_geo = pickle_load("deploy/models/geo_cluster.pkl")
+    stations_encoder = pickle_load("deploy/data/metro_stations.pkl")
+    categorical_encoder = joblib_load("deploy/models/categorical_encoder.pkl")
+    metros = csv_load("deploy/data/metro_coords.csv")
 
     dist_krasn = haversine_distance(lat, lng, 55.760378, 37.577114)
     dist_kievskaya = haversine_distance(lat, lng, 55.743117, 37.564132)
@@ -133,11 +137,11 @@ def prepare_features():
     return df, square
 
 
-def predict():
+def predict() -> None:
     data, square = prepare_features()
     predictions = 0
     for fold in range(5):
-        model = joblib_load(f'deploy/lgb_model_{fold}')
+        model = joblib_load(f'deploy/models/lgb_model_{fold}')
         predictions += model.predict(data)/5
 
     square_price = int(predictions)//1000
@@ -159,7 +163,7 @@ def predict():
         st.success(f"Общая стоимость: {price:.3f} млн. рублей")
 
 
-def main():
+def main() -> None:
     st.title('Предсказание цен на вторичное жильё в Москве 🏠')
     st.markdown("""
     * Приложение создано для определения примерной рыночной стоимости квартиры на рынке вторичного жилья в Москве
